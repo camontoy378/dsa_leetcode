@@ -1,74 +1,44 @@
-
-
-class TreeNode():
-
-    def __init__(self, val=0, left=None, right=None):
-        self.val    = val
-        self.left   = left
-        self.right  = right
-
+from make_tree import *
 
 class SameTree():
 
     def __init__(self, array1, array2):
         self.array1  = array1
         self.array2  = array2
-    
-    def create_tree_from_array(self, array):
 
-        root : TreeNode = None
-        #insert_left = True
+    def compare_roots(self, root1, root2, output):
 
-        if len(array) == 0:
-            return
+        #Base case
+        if root1 == root2 == None:
+            return output
+        if root1 == None or root2 == None:
+            return False
+        if root1.val != root2.val:
+            return False
         
-        for item in array:
-            root = self.insert(root, item)
+        if output == True:
+            output = self.compare_roots(root1.left, root2.left, output)
 
-        return root
-        #head = TreeNode(val=array[0])
+        if output == True:
+            output = self.compare_roots(root1.right, root2.right, output)
 
-        #if len(array) == 1:
-        #    return
-        
-        #for item in array:
-        #    pass
-        
-    #Only works for 3 values max.
-    def insert(self, ptr, value):
-
-        if ptr == None:
-            if value == None:
-                return
-            else:
-                ptr = TreeNode(value)
-        elif ptr.left == None:
-            ptr.left = TreeNode(value)
-        else:
-            ptr.right = TreeNode(value)
-        
-        return ptr
+        return output
 
     def solve(self):
 
-        p = self.create_tree_from_array(self.array1)
-        q = self.create_tree_from_array(self.array2)
+        i = 0
+        n = len(self.array1)
+        m = len(self.array2)
 
 
-        #Compare root
-        if p == None and q == None:
-            return True
-        if p == None or q == None:
-            return False
-        if p.val != q.val:
-            return False
-        #Compare left
-        if p.left and q.left == None:
-            return False
-        if p.left.val != q.left.val:
-            return False
-        #Compare right
-        if p.right.val != q.right.val:
-            return False
+        mytree_p = MakeTree(self.array1)
+        mytree_q = MakeTree(self.array2)
 
-        return True
+        p = mytree_p.insert_level_order(i, n)
+        q = mytree_q.insert_level_order(i, m)
+
+        output_default_value = True
+
+        return self.compare_roots(p, q, output_default_value)
+
+        

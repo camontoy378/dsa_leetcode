@@ -14,7 +14,7 @@ def test_make_tree():
     root = solution.insert_level_order(i, n)
     solution.print_in_order(root)
 
-    assert root.data == 1
+    assert root.val == 1
 
     #Test 2
     p = [1,2,3]

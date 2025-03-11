@@ -11,7 +11,11 @@ class MakeTree():
     def __init__(self, array):
         self.array          = array
         self.left_index     = 0
-        self.array_length   = len(array) 
+        self.array_length   = len(array)
+
+    def get_tree_root(self):
+
+        return self.insert_level_order(self.left_index, self.array_length) 
 
     def insert_level_order(self, i, n):
 

@@ -12,7 +12,6 @@ def test_make_tree():
     solution = MakeTree(input)
 
     root = solution.insert_level_order(i, n)
-    solution.print_in_order(root)
 
     assert root.val == 1
 
@@ -24,7 +23,6 @@ def test_make_tree():
     solution.array = p
 
     root = solution.insert_level_order(i, n)
-    solution.print_in_order(root)
 
     assert root.left.data == 2
 

@@ -29,7 +29,6 @@ struct Node* create_node( int value)
 struct Node* get_tree_root(int array[], int array_size)
 {
     int array_index_0   = 0;
-    //int length_of_array = sizeof(array)/sizeof(array[0]);
 
     return insert_level_order(array_index_0, array_size, array);
 };
@@ -43,7 +42,7 @@ struct Node* insert_level_order(int i, int n, int array[])
     struct Node* root = NULL;
 
     //Base Case
-    if (i < n && array[i] != NULL)
+    if (i < n && array[i] != '\0')
     {    
         root        = create_node(array[i]);
 

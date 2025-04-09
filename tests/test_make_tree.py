@@ -24,7 +24,7 @@ def test_make_tree():
 
     root = solution.insert_level_order(i, n)
 
-    assert root.left.data == 2
+    assert root.left.val == 2
 
     #Test 3
-    assert root.right.data == 3
+    assert root.right.val == 3

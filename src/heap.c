@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <time.h>
+
 void heapify_recurse(int* array, int root_index, int* ptr_array_size);
 void print_array_values(int* array, int* array_size);
 void swap_values(int* array, int index1, int index2);
@@ -24,6 +26,33 @@ int heap_pop(int* array, int* ptr_array_size)
 
     return root_value;
 }
+
+/*************************************************************************/
+// Check for array size max?
+/*************************************************************************/
+void heap_push(int* array, int* ptr_array_size, int value_to_push)
+{
+    int first_free_loc_in_array_index = *ptr_array_size;
+    
+    array[first_free_loc_in_array_index] = value_to_push;
+
+    *ptr_array_size += 1;
+    
+    
+    for (first_free_loc_in_array_index; first_free_loc_in_array_index >= 0; first_free_loc_in_array_index = first_free_loc_in_array_index / 2 )
+    {
+        heapify_recurse(array, first_free_loc_in_array_index, ptr_array_size);
+
+        if (first_free_loc_in_array_index == 0)
+        {
+            break;
+        }
+
+    }
+
+}
+
+
 
 /*************************************************************************/
 //
@@ -97,5 +126,21 @@ void swap_values(int* array, int index1, int index2)
 
 }
 
-//heapush
+
 //create heap
+/*
+int main()
+{
+    int input[8]            = {50,30,20,15,10,8,16};
+    int array_size_max      = sizeof(input) / sizeof(int);
+    int item_to_push        = 60;
+
+    int current_array_size  = array_size_max - 1;
+
+
+    heap_push(input, &current_array_size, item_to_push);
+
+    return 0;
+
+}
+*/

@@ -55,4 +55,4 @@ class HighFive():
         for id, sum in sum_dict.items():
             output.append( [id, int(sum / NUM_SCORES_TO_AVG) ] )
 
-        return output
+        return sorted(output)

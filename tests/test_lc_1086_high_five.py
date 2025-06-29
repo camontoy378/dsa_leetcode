@@ -20,3 +20,12 @@ def test_solve():
     solution = HighFive(input)
 
     assert solution.solve() == output
+
+    #Test 3
+    input   = [[1,84],[1,72],[1,47],[1,43],[1,78], [2,79],[2,4] ,[2,23],[2,88],[2,79], [3,75],[3,80],[3,38],[3,73],[3,4]]
+    
+    output  = [[1,64],[2,54],[3,54]]
+
+    solution = HighFive(input)
+
+    assert solution.solve() == output

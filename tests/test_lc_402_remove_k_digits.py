@@ -34,9 +34,6 @@ def test_solve():
 
     assert solution.solve() == output
 
-
-def test_solve_4():
-
     #Test 4
 
     number  = "33526221184202197273"
@@ -46,3 +43,25 @@ def test_solve_4():
     solution = RemoveKDigits(number, k)
 
     assert solution.solve() == output
+
+    #Test 5
+
+    number  = "112"
+    k       = 1
+    output  = "11"
+
+    solution = RemoveKDigits(number, k)
+
+    assert solution.solve() == output
+
+    #Test 7
+
+    number  = "10001"
+    k       = 4
+    output  = "0"
+
+    solution = RemoveKDigits(number, k)
+
+    assert solution.solve() == output
+    
+

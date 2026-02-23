@@ -7,44 +7,51 @@ class FindPathInGraph():
         self.src        = src
         self.dest       = dest
 
-    def bfs(self):
+    def create_adj_dict(self, edge_list):
 
-        path    = []
-        q       = []
-        visited = [False] * self.num_nodes
+        adj_dict = {}
 
-        q.append(self.src)
-        visited[self.src] = True
+        for edge in edge_list:
+            key     = edge[0]
+            value   = edge[1]
 
-        while q:
+            if key in adj_dict:
+                adj_dict[key].append(value)
+            else:
+                adj_dict[key] = [value]
 
-            curr_node = q.pop(0)
+            if value in adj_dict:
+                adj_dict[value].append(key)
+            else:
+                adj_dict[value] = [key]
+            
+        return adj_dict
+    
+    def dfs(self, adj_dict, src, dest, visited):
 
-            #Find adj nodes
-            for item in self.edges:
+        #Exit condition
+        if src == dest:
+            return True
+        
+        if visited[src] == 1:
+            return False
+        
+        #Work
+        visited[src] = 1
 
-                if item[0] == curr_node:
-
-                    if not visited[item[1]]:
-
-                        q.append(item[1])
-                        visited[item[1]] = True
-                    
-                if item[1] == curr_node:
-                    
-                    if not visited[item[0]]:
-
-                        q.append(item[0])
-                        visited[item[0]] = True
-
-            path.append(curr_node)
-
-            if self.dest in path:
+        #Recursion
+        for new_num in adj_dict[src]:
+            if self.dfs(adj_dict, new_num, dest, visited):
                 return True
             
         return False
-    
 
     def solve(self):
 
-        return self.bfs()
+        src     = self.src
+        dest    = self.dest
+        visited = [0] * self.num_nodes
+
+        adj_dict = self.create_adj_dict(self.edges)
+
+        return self.dfs(adj_dict, src, dest, visited)

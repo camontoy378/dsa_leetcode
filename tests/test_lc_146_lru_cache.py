@@ -22,7 +22,7 @@ def test_solve():
     lRUCache.put(2, 2);     # cache is {1=1, 2=2}
     my_output.append(None)
     
-    result = lRUCache.get(1);        # return 1
+    result = lRUCache.get(1);        # return 1. cache is {2=2, 1=1}
     my_output.append(result)
 
     lRUCache.put(3, 3);     # LRU key was 2, evicts key 2, cache is {1=1, 3=3}

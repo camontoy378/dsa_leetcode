@@ -3,6 +3,7 @@ class Node():
     def __init__(self, data):
         self.data   = data
         self.next   = None
+        self.prev   = None
 
 class LRUCache():
 
@@ -11,72 +12,74 @@ class LRUCache():
         self.num_items  = 0
         self.new        = None
         self.old        = None
+        #key : Address location of node containing key-value data
+        self.key_loc    = {}
 
-    def delete_found_node(self, pre_search, search):
-        if pre_search.next == None:
+    def delete_found_node(self, node_loc):
+
+        #One node
+        if (node_loc == self.new) and (node_loc == self.old):
             self.new        = None
             self.old        = None
 
-        elif pre_search == search:
-            self.new = pre_search = search = pre_search.next
+        #First node
+        elif node_loc == self.new:
+            self.new = node_loc.next
+            self.new.prev = None
         
-        elif pre_search.next.next == None:
-            self.old        = pre_search
-            self.old.next   = None
+        #Last node
+        elif node_loc == self.old:
+            self.old = node_loc.prev
+            self.old.next = None 
 
         else:
-            pre_search.next = search.next
+            node_loc.prev.next = node_loc.next
+            node_loc.next.prev = node_loc.prev
 
+        #Remove from hash map
+        key = node_loc.data[0]
+        self.key_loc.pop(key)
+
+        #Decrease number of items in cache
         self.num_items -= 1
 
     def get(self, key):
 
-        found, pre_search, search = self.search(key)
-        
-        if not found:
+        if key in self.key_loc:
             
-            return -1
-        
-        else:
-            found_value = search.data[1]
-            self.update_cache(pre_search, search)
+            found_value = self.key_loc[key].data[1]
+            
+            self.update_cache(self.key_loc[key])
+
             return found_value
 
+        else:
+            return -1
+
     def put(self, key, value):
+        
+        #Key in cache
+        if key in self.key_loc:
+
+            #Update  key
+            self.key_loc[key].data[1] = value
+
+            self.update_cache(self.key_loc[key])
+
+            return 
+
+
+        #New data
 
         self.num_items += 1
 
-        #If key in data, update key and reduce self.num_items
-        found, pre_search, search = self.search(key)
-        
-        if found:
-            search.data[1] = value
-            self.num_items -= 1
-
-            found_key   = search.data[0]
-            found_value = search.data[1]
-
-            self.update_cache(pre_search, search)
-
-            return
-
-        #New data
+        #Check capacity
         if self.num_items > self.capacity:
-            #Remove node from end
-            search = self.new
             
-            if search.next == None:
-                self.new = None
-                self.old = None
-            else:
-                while search.next != self.old:
-                    search = search.next
+            #Remove node from end
+            self.delete_found_node(self.old)
 
-                search.next = None
-                self.old    = search 
-
-            self.num_items = self.capacity
-
+        
         #If no nodes
         if self.new == None:
 
@@ -84,43 +87,27 @@ class LRUCache():
 
             self.new = self.old = node
 
+            self.key_loc[key] = self.new
+
         else:
             #Insert at head.
             node = Node( [ key, value ] )
             
-            node.next   = self.new
-            self.new    = node
+            node.next       = self.new
+            self.new.prev   = node    
+            self.new        = node
 
-    def search(self, key):
-        #Create search pointer
-        search      = self.new
-        pre_search  = self.new
-        found       = False
+            self.key_loc[key] = self.new
 
-        #search for data[0] == key
-        while (not found) and (search != None):
-
-            if search.data[0] == key:
-                found       = True
-
-            elif pre_search == search:
-                search = search.next
-
-            else:
-                search      = search.next
-                pre_search  = pre_search.next
-        
-        return found, pre_search, search
     
-    def update_cache(self, pre_search, search):
+    def update_cache(self, node_loc):
 
-        found_key   = search.data[0]
-        found_value = search.data[1]
+        found_key   = node_loc.data[0]
+        found_value = node_loc.data[1]
         
-        #Remove found node
-        self.delete_found_node(pre_search, search)
+        self.delete_found_node(node_loc)
 
-        #put node
+        #Put node
         self.put(found_key,found_value) 
         
 

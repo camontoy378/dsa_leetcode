@@ -22,11 +22,11 @@ def test_solve():
 
     assert solution.solve() == output
 
-    #Test 3
+     #Test 3
 
     n       = 23
-    output  = 1
+    output  = 48
 
     solution = UglyNumTwo(n)
 
-    #assert solution.solve() == output
+    assert solution.solve() == output

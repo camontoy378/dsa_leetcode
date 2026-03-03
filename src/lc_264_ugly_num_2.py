@@ -1,3 +1,5 @@
+import heapq
+
 class UglyNumTwo():
 
     def __init__(self, n):
@@ -7,45 +9,28 @@ class UglyNumTwo():
 
         n = self.n
     
+        #Setup
         prime_factors_limit = [2,3,5]
+        heap_min = []
+        count   = 0
 
-        ugly_num_set = {1}
-        
-        output = [1]
-        count   = 1
+        heapq.heappush(heap_min, 1)
+        ugly_num = 1
 
-        
-        while len(output) < n:
+        while count < n:
+            
+            ugly_num = heapq.heappop(heap_min)
+
+            #Remove duplicates
+            while (len(heap_min) > 0) and (ugly_num == heap_min[0]):
+                heapq.heappop(heap_min)
 
             count += 1
 
-            if self.is_ugly_num(prime_factors_limit, count, ugly_num_set):
-                output.append(count)
+            for num in prime_factors_limit:
 
-        return output[-1]
+                new_num = ugly_num * num
 
-    def is_ugly_num(self, prime_factors_limit, count, ugly_num_set):
+                heapq.heappush(heap_min, new_num)
 
-        temp = count
-
-
-        for num in prime_factors_limit:
-
-            modulo = 0
-
-            while modulo == 0:
-                modulo = temp % num
-
-                if modulo == 0:
-                    temp = temp / num
-
-                    #If already an ugly num
-                    if temp in ugly_num_set:
-                        ugly_num_set.add(count)
-                        return True
-
-        if temp == 1:
-            ugly_num_set.add(count)
-            return True
-        else:
-            return False
+        return ugly_num

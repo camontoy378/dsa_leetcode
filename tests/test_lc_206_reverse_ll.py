@@ -1,6 +1,6 @@
 import setup_paths
 
-from lc_206_reverse_ll import ReverseLinkedList_iter
+from lc_206_reverse_ll import ReverseLinkedList
 
 def test_solve():
 
@@ -9,7 +9,7 @@ def test_solve():
     input   = [1,2,3,4,5]
     output  = [5,4,3,2,1]
 
-    solution = ReverseLinkedList_iter(input)
+    solution = ReverseLinkedList(input, "iter")
 
     assert solution.solve() == output
 
@@ -18,7 +18,7 @@ def test_solve():
     input   = [1,2]
     output  = [2,1]
 
-    solution = ReverseLinkedList_iter(input)
+    solution = ReverseLinkedList(input, "rec")
 
     assert solution.solve() == output
 
@@ -27,6 +27,6 @@ def test_solve():
     input   = []
     output  = []
 
-    solution = ReverseLinkedList_iter(input)
+    solution = ReverseLinkedList(input, "rec")
 
     assert solution.solve() == output

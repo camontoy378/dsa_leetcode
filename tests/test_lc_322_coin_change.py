@@ -13,6 +13,7 @@ def test_solve():
 
     assert solution.solve() == output
 
+
     #Test 2
     coins   = [2]
     amount  = 3
@@ -21,6 +22,7 @@ def test_solve():
     solution = CoinChange(coins, amount)
 
     assert solution.solve() == output
+
 
     #Test 3
     coins   = [1]
@@ -31,6 +33,7 @@ def test_solve():
 
     assert solution.solve() == output
 
+
     #Test 4
     coins   = [2,5,10,1]
     amount  = 27
@@ -39,6 +42,7 @@ def test_solve():
     solution = CoinChange(coins, amount)
 
     assert solution.solve() == output
+
 
     #Test 5
     coins   = [186,419,83,408]

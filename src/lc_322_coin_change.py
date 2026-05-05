@@ -4,30 +4,25 @@ class CoinChange():
         self.coins  = coins
         self.amount = amount
 
-    def get_num_coins(self, amount, num_coins, index, coins):
+    def get_num_coins(self, amount, num_coins, coins, min_num_coins):
         
         #End conditions
         if amount < 0:
-            num_coins   -= 1
-            return False, num_coins
-        if index < 0:
-            num_coins = -1
-            return False, num_coins
+            return min_num_coins
         if amount == 0:
-            return True, num_coins
+            min_num_coins = min(min_num_coins, num_coins)
+            return min_num_coins
         
         #Work
-        new_amount  = amount - coins[index]
         num_coins   += 1
 
-        #If found keep going on same branch
-        found, num_coins = self.get_num_coins(new_amount, num_coins, index, coins)
+        #Recursion
+        for coin in coins:
+            new_amount  = amount - coin
+            min_num_coins = self.get_num_coins(new_amount, num_coins, coins, min_num_coins)
 
-        #If not found, try different branch
-        if not found:
-            found, num_coins = self.get_num_coins(amount, num_coins, index - 1, coins)
+        return min_num_coins
 
-        return found, num_coins
 
     def solve(self):
 
@@ -35,11 +30,12 @@ class CoinChange():
         amount      = self.amount
 
         num_coins   = 0
-        index = len(coins) - 1
+        min_num_coins   = 10**4
 
-        found, amount = self.get_num_coins(amount, num_coins, index, sorted(coins))
+        min_num_coins = self.get_num_coins(amount, num_coins, coins, min_num_coins)
 
-        if found:
-            return amount
+        #if found:
+        if min_num_coins != 10**4:
+            return min_num_coins
 
         return -1

@@ -85,10 +85,17 @@ int firstMissingPositive(int* nums, int numsSize){
     }
 
     //Find missing positive
-    while (nums[i] == num_needed)
+    while ( (i < numsSize) && (nums[i] == num_needed) )
     {
         i++;
-        num_needed++;
+
+        if ((i < numsSize) && (nums[i] != num_needed)){
+            num_needed++;
+        }
+
+        if (i >= numsSize){
+            num_needed++;
+        }
     }
 
     return num_needed;
@@ -98,9 +105,9 @@ int main(){
     printf("At Main\n");
 
     //Test 1
-    int nums[]      = {1,2,0};
-    int output      = 3;
-    int nums_size   = sizeof(nums) / sizeof(nums[0]); 
+    //int nums[]      = {1,2,0};
+    //int output      = 3;
+    //int nums_size   = sizeof(nums) / sizeof(nums[0]); 
 
     //Test 2
     //int nums[]      = {3,4,-1,1};
@@ -112,6 +119,11 @@ int main(){
     //int nums[]      = {11,12,7,8,9};
     //int output      = 1;
     //int nums_size   = sizeof(nums) / sizeof(nums[0]); 
+
+    //Test 4
+    int nums[]      = {0,2,2,1,1};
+    int output      = 3;
+    int nums_size   = sizeof(nums) / sizeof(nums[0]);
 
     output = firstMissingPositive(nums, nums_size);
 

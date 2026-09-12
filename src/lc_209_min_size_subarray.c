@@ -12,8 +12,6 @@ int minSubArrayLen(int target, int* nums, int numsSize)
     int j = 0;
     int sum = nums[j];
 
-    printf("Nums size array = %d\n", numsSize);
-
     while (j < numsSize)
     {
         if ( sum >= target)

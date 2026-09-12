@@ -99,28 +99,7 @@ int time_required_to_buy(int* tickets, int ticket_size, int k){
         }
     }
 
+    printf("Output = %d\n", count);
     return count;
 
-}
-
-
-int main(void){
-
-    //Test 1
-    int tickets[]   = {2,3,2};
-    int k           = 2;
-    int output      = 6;
-
-    //Test 2
-    //int tickets[]       = {5,1,1,1};
-    //int k               = 0;
-    //int output          = 8;
-
-    int ticket_size     = sizeof(tickets)/sizeof(tickets[0]);
-
-    int time_2_buy = time_required_to_buy(tickets, ticket_size, k);
-
-    printf("Time to buy = %d\n", time_2_buy);
-
-    return 0;
 }

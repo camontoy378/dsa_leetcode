@@ -43,16 +43,3 @@ int solve(int steps)
     return num_ways_climb_stairs(steps, track_steps);
 
 }
-
-int main(void)
-{
-    int n = 5;
-
-    printf("At main\n");
-
-    int num_way = solve(n);
-
-    printf("Num ways to climb stairs = %d\n", num_way);
-
-    return 0;
-}
